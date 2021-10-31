@@ -16,6 +16,9 @@ export class User {
     favorite: string;
 
     @OneToMany(() => Pet, pet => pet.owner)
-    @Column('simple-array')
+    @Column({
+        type: 'simple-array',
+        nullable: true
+    })
     pets: Pet[]
 }
