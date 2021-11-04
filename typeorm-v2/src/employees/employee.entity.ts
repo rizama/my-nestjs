@@ -1,4 +1,5 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Task } from "src/tasks/task.entity";
+import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { ContactInfo } from "./contact.entity";
 
 @Entity()
@@ -11,4 +12,7 @@ export class Employee {
 
     @OneToOne(() => ContactInfo, contactInfo => contactInfo.employee)
     contactInfo: ContactInfo
+
+    @OneToMany(() => Task, task => task.employee)
+    tasks: Task[];
 }
