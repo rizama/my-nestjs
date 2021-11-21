@@ -6,6 +6,15 @@ import { CreateuserDto } from './dto/user-create.dto';
 describe('AppController', () => {
     let appController: AppController;
 
+    const data = [
+        {
+            id: 1,
+            name: 'sam',
+            email: 'sam@gmail.com',
+            favorite: 'game',
+        },
+    ];
+
     const mockUserService = {
         createUser: jest.fn((dto) => {
             return {
@@ -18,9 +27,28 @@ describe('AppController', () => {
                 name,
                 email: 'sam@gmail.com',
                 favorite: 'game',
-            }
+            };
 
             return body;
+        }),
+        getAll: jest.fn(() => {
+            return data;
+        }),
+        getOneById: jest.fn((id) => {
+            const singleData = {
+                id,
+                name: 'sam',
+                email: 'sam@gmail.com',
+                favorite: 'game',
+            };
+
+            return singleData;
+        }),
+        deleteUser: jest.fn((id) => {
+            return {
+                id,
+                ...data[0]
+            };
         }),
     };
 
@@ -36,9 +64,27 @@ describe('AppController', () => {
         appController = app.get<AppController>(AppController);
     });
 
-    describe('Users Module', () => {
+    describe('Users Controller', () => {
         it('controller should be defined"', () => {
             expect(appController).toBeDefined();
+        });
+
+        it('should fetch all users', async () => {
+            expect(await appController.getUsers()).toEqual(data);
+            expect(mockUserService.getAll).toHaveBeenCalled();
+        });
+
+        it('should fetch user', async () => {
+            const id = 1;
+            const singleData = {
+                id,
+                name: 'sam',
+                email: 'sam@gmail.com',
+                favorite: 'game',
+            };
+
+            expect(await appController.getUser(id)).toEqual(singleData);
+            expect(mockUserService.getOneById).toHaveBeenCalled();
         });
 
         it('should create a new user', async () => {
@@ -64,9 +110,16 @@ describe('AppController', () => {
 
             expect(await appController.updateUser(id, updateUserDto)).toEqual({
                 id: 1,
-                ...updateUserDto
+                ...updateUserDto,
             });
             expect(mockUserService.updateUser).toHaveBeenCalled();
+        });
+
+        it('should delete user', async () => {
+            const id = 1;
+
+            expect(await appController.deleteUser(id)).toEqual(data[0]);
+            expect(mockUserService.deleteUser).toHaveBeenCalled();
         });
     });
 });
