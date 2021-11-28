@@ -3,8 +3,17 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { AppService } from './app.service';
 import { User } from './user.entity';
 
-describe('AppController', () => {
+describe('AppService', () => {
     let service: AppService;
+
+    const data = [
+        {
+            id: 1,
+            name: 'sam',
+            email: 'sam@gmail.com',
+            favorite: 'game',
+        },
+    ];
 
     const mockUserRepository = {
         create: jest.fn().mockImplementation((dto) => dto),
@@ -14,6 +23,21 @@ describe('AppController', () => {
                 ...user,
             }),
         ),
+        find: jest.fn().mockImplementation(() => {
+            return [data];
+        }),
+        findOneOrFail: jest.fn().mockImplementation((id: number) => {
+            return {
+                id,
+                ...data[0]
+            };
+        }),
+        deleteUser: jest.fn((user) => {
+            return {
+                id: 1,
+                ...user
+            };
+        })
     };
 
     beforeEach(async () => {
@@ -50,4 +74,74 @@ describe('AppController', () => {
 
         expect(mockUserRepository.create).toHaveBeenCalled();
     });
+
+    it('should find all users', async () => {
+        expect(await service.getAll()).toEqual([data]);
+        expect(mockUserRepository.find).toHaveBeenCalled();
+    });
+
+    it('should fetch user', async () => {
+        const id = 1;
+        const singleData = {
+            id,
+            name: 'sam',
+            email: 'sam@gmail.com',
+            favorite: 'game',
+        };
+
+        expect(await service.getOneById(id)).toEqual(singleData);
+        expect(mockUserRepository.findOneOrFail).toHaveBeenCalled();
+    });
+
+    it('should update user', async () => {
+        const updateUserDto = {
+            name: 'sam',
+            email: 'sam@gmail.com',
+            favorite: 'game',
+        };
+        const id = 1;
+
+        expect(await service.getOneById(id)).toEqual({
+            id,
+            ...updateUserDto
+        });
+        expect(mockUserRepository.findOneOrFail).toHaveBeenCalled();
+
+        updateUserDto.name = "rizky";
+
+        expect(await mockUserRepository.save(updateUserDto)).toEqual({
+            id: expect.any(Number),
+            name: 'rizky',
+            email: 'sam@gmail.com',
+            favorite: 'game',
+        });
+
+        expect(mockUserRepository.save).toHaveBeenCalled();
+    }); 
+
+    it('should delete user', async () => {
+        const updateUserDto = {
+            name: 'sam',
+            email: 'sam@gmail.com',
+            favorite: 'game',
+        };
+        const id = 1;
+
+        expect(await service.getOneById(id)).toEqual({
+            id,
+            ...updateUserDto
+        });
+        expect(mockUserRepository.findOneOrFail).toHaveBeenCalled();
+
+        updateUserDto.name = "rizky";
+
+        expect(await mockUserRepository.deleteUser(updateUserDto)).toEqual({
+            id: 1,
+            name: 'rizky',
+            email: 'sam@gmail.com',
+            favorite: 'game',
+        });
+
+        expect(mockUserRepository.deleteUser).toHaveBeenCalled();
+    }); 
 });
