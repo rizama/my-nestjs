@@ -20,8 +20,7 @@ export class ThroneOfGlassService {
     }
 
     async getCharactersByScraping() {
-        const url =
-            'https://throneofglass.fandom.com/wiki/Category:Kingdom_of_Ash_characters';
+        const url = process.env.URL_CHARACTER;
         const { data } = await axios.get(url);
         const $ = cheerio.load(data);
         const categories = $('ul.category-page__members-for-char');
@@ -88,7 +87,7 @@ export class ThroneOfGlassService {
     }
 
     async getCharInfo(characterPageName) {
-        const baseUrl = `https://throneofglass.fandom.com/wiki/${characterPageName}`;
+        const baseUrl = `${process.env.URL_DETAIL_CHAR}${characterPageName}`;
         const { data } = await axios.get(baseUrl);
         const $ = cheerio.load(data);
 
