@@ -48,7 +48,7 @@ export class ThroneOfGlassController {
         }
     }
 
-    @Get('seed-characters')
+    @Get('seed')
     async scrapeCharacters(): Promise<void> {
         try {
             await this.togService.loadCharacters();
