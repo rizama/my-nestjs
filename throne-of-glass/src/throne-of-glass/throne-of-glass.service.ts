@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { getConnection, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Tog } from './tog.entity';
 import axios from 'axios';
 import cheerio from 'cheerio';
