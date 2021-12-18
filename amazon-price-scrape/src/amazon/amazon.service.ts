@@ -25,6 +25,6 @@ export class AmazonService {
     }
 
     getProduct(productId: string) {
-        return `https://www.amazon.com/gp/aod/ajax/?asin=${productId}&m=&qid=&smid=&sourcecustomerorglistid=&sourcecustomerorglistitemid=&sr=&pc=dp`;
+        return `www.amazon.com/gp/aod/ajax/?asin=${productId}&m=&qid=&smid=&sourcecustomerorglistid=&sourcecustomerorglistitemid=&sr=&pc=dp`;
     }
 }
