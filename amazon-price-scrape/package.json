@@ -26,6 +26,8 @@
     "@nestjs/platform-express": "^8.0.0",
     "axios": "^0.24.0",
     "cheerio": "^1.0.0-rc.10",
+    "jsdom": "^19.0.0",
+    "moment": "^2.29.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
