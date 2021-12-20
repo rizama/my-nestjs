@@ -80,8 +80,6 @@ export class AmazonService {
                     title,
                     offers: [],
                 };
-
-                console.log(result);
             }
 
             // return productUrl;
