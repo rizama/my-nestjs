@@ -55,6 +55,7 @@ export class AmazonService {
             }
 
             if (this.COOKIE) {
+                console.log(productUrl)
                 const { data: html } = await axios.get(productUrl, {
                     headers: {
                         Accept: 'text/html,*/*',
@@ -67,22 +68,38 @@ export class AmazonService {
                 const dom = new JSDOM(html);
                 const $ = (selector) =>
                     dom.window.document.querySelector(selector);
+
                 const pinnedElement = $('#pinned-de-id');
+
                 const title = $('#aod-asin-title-text').textContent.trim();
+
                 const pinnedPrice = pinnedElement.querySelector(
                     '.a-price .a-offscreen',
                 ).textContent;
+
+                // const pinnedOfferId = pinnedElement
+                //     .querySelector('input[name="offerListingID"]')
+                //     .getAttribute('value');
+
+                const pinnedShippedFrom = pinnedElement.querySelector('#aod-offer-shipsFrom').querySelector("span.a-color-base").textContent.trim();
+                const pinnedSoldBy = pinnedElement.querySelector('#aod-offer-soldBy').querySelector('a').textContent.trim();
+
                 const pinned = {
                     price: pinnedPrice,
+                    // offer_id: pinnedOfferId,
+                    ships_from: pinnedShippedFrom,
+                    sold_by: pinnedSoldBy
                 };
                 const result = {
                     pinned,
                     title,
                     offers: [],
                 };
+
+                console.log(result)
             }
 
-            // return productUrl;
+            return productUrl;
         } catch (error) {
             console.log(error.stack);
         }
