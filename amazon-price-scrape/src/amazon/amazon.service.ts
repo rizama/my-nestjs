@@ -55,7 +55,7 @@ export class AmazonService {
             }
 
             if (this.COOKIE) {
-                console.log(productUrl)
+                console.log(productUrl);
                 const { data: html } = await axios.get(productUrl, {
                     headers: {
                         Accept: 'text/html,*/*',
@@ -75,8 +75,8 @@ export class AmazonService {
 
                 const getOffer = (element) => {
                     const price = element.querySelector(
-                    '.a-price .a-offscreen',
-                ).textContent;
+                        '.a-price .a-offscreen',
+                    ).textContent;
 
                     const ships_from = element
                         .querySelector('#aod-offer-shipsFrom')
@@ -92,17 +92,28 @@ export class AmazonService {
                         price,
                         ships_from,
                         sold_by,
-                };
+                    };
                 };
 
                 const pinned = getOffer(pinnedElement);
+
+                const offerlistElement = $('#aod-offer-list');
+                const offerElements = offerlistElement.querySelectorAll(
+                    '.aod-information-block',
+                );
+
+                const offers = [];
+                offerElements.forEach(element => {
+                    offers.push(getOffer(element));
+                });
+
                 const result = {
                     pinned,
                     title,
-                    offers: [],
+                    offers
                 };
 
-                console.log(result)
+                console.log(result);
             }
 
             return productUrl;
