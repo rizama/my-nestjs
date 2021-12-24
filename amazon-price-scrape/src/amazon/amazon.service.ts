@@ -73,23 +73,29 @@ export class AmazonService {
 
                 const title = $('#aod-asin-title-text').textContent.trim();
 
-                const pinnedPrice = pinnedElement.querySelector(
+                const getOffer = (element) => {
+                    const price = element.querySelector(
                     '.a-price .a-offscreen',
                 ).textContent;
 
-                // const pinnedOfferId = pinnedElement
-                //     .querySelector('input[name="offerListingID"]')
-                //     .getAttribute('value');
+                    const ships_from = element
+                        .querySelector('#aod-offer-shipsFrom')
+                        .querySelector('span.a-color-base')
+                        .textContent.trim();
 
-                const pinnedShippedFrom = pinnedElement.querySelector('#aod-offer-shipsFrom').querySelector("span.a-color-base").textContent.trim();
-                const pinnedSoldBy = pinnedElement.querySelector('#aod-offer-soldBy').querySelector('a').textContent.trim();
+                    const sold_by = element
+                        .querySelector('#aod-offer-soldBy')
+                        .querySelector('a')
+                        .textContent.trim();
 
-                const pinned = {
-                    price: pinnedPrice,
-                    // offer_id: pinnedOfferId,
-                    ships_from: pinnedShippedFrom,
-                    sold_by: pinnedSoldBy
+                    return {
+                        price,
+                        ships_from,
+                        sold_by,
                 };
+                };
+
+                const pinned = getOffer(pinnedElement);
                 const result = {
                     pinned,
                     title,
