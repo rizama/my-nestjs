@@ -88,10 +88,12 @@ export class AmazonService {
                         .querySelector('a')
                         .textContent.trim();
 
+                    const deliveryMessage = element.querySelector('#delivery-message').textContent.trim();
                     return {
                         price,
                         ships_from,
                         sold_by,
+                        delivery_message: deliveryMessage.replace(/\s+/g, ' ').replace('Details', '').trim(),
                     };
                 };
 
@@ -108,6 +110,7 @@ export class AmazonService {
                 });
 
                 const result = {
+                    productId,
                     pinned,
                     title,
                     offers
