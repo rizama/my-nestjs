@@ -88,7 +88,7 @@ export class AmazonService {
                         .querySelector('a')
                         .textContent.trim();
 
-                    const deliveryMessage = element.querySelector('#delivery-message').textContent.trim();
+                    const deliveryMessage = element.querySelector('#mir-layout-DELIVERY_BLOCK').textContent.trim();
                     return {
                         price,
                         ships_from,
