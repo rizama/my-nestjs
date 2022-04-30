@@ -17,7 +17,7 @@ Project about NestJS
 - `npm run start:dev` / `yarn start:dev`
 - `nest generate controller` / `nest g co`
 - `nest generate service` / `nest g s`
-- `nest generate modue <name>` / `nest g mo`
+- `nest generate module <name>` / `nest g mo`
 - `nest g class address/dto/create-address.dto --no-spec`
 
 ## Decorators
