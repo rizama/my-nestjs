@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Logger, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { MathService } from './math.service';
+import { MessagePattern } from '@nestjs/microservices';
 
 @Controller()
 export class AppController {
@@ -17,10 +18,18 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  // Map the POST /add routeto this method
-  @Post('add')
+  // // Map the POST /add routeto this method
+  // @Post('add')
+  // // define the logic to be executed
+  // async accumulate(@Body('data') data: number[]) {
+  //   this.logger.log(`Adding ${data.toString()}`);
+  //   return this.mathService.accumulate(data);
+  // }
+
+  // Define the message pattern for this method
+  @MessagePattern('add')
   // define the logic to be executed
-  async accumulate(@Body('data') data: number[]) {
+  async accumulate(data: number[]) {
     this.logger.log(`Adding ${data.toString()}`);
     return this.mathService.accumulate(data);
   }
