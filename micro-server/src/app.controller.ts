@@ -30,6 +30,7 @@ export class AppController {
   @MessagePattern('add')
   // define the logic to be executed
   async accumulate(data: number[]) {
+    this.logger.log(`Microservice Receice the data from apps`);
     this.logger.log(`Adding ${data.toString()}`);
     return this.mathService.accumulate(data);
   }
