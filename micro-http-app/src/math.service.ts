@@ -12,10 +12,14 @@ export class MathService {
     private client: ClientProxy;
 
     private microserviceOptions: ClientOptions = {
-        transport: Transport.TCP,
+        // transport: Transport.TCP,
+        // options: {
+        //     host: '127.0.0.1',
+        //     port: 8877,
+        // },
+        transport: Transport.REDIS,
         options: {
-            host: '127.0.0.1',
-            port: 8877,
+            url: 'redis://localhost:6379',
         },
     };
 
