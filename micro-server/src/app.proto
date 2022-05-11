@@ -5,14 +5,25 @@ package app;
 // Declare a service for each controller you have
 service AppController {
     // Declare an rpc for each method that is called via GRPC
+    // rpc MethodName (Request Type) returns (Response Type);
     rpc Accumulate (NumberArray) returns (SumOfNumberArray);
 }
 
 // Declare the types used above
 message NumberArray {
+    // 'repeated' means the type is array
+    // 'double' means type of list array
+    // 'data' is name variable
+    // '1' is first argument
     repeated double data = 1;
+
+    // its mean the NumberArray is passing 2 arguments array. data and data2.
+    // '2' is second argument
+    // repeated double data2 = 2;
 }
 
 message SumOfNumberArray {
+    // 'double' means type data
+    // 'sum' is name variable
     double sum = 1;
 }
