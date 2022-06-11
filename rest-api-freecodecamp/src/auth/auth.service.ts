@@ -8,14 +8,25 @@ export class AuthService {
 
     constructor(private prisma: PrismaService){}
 
-    signup(dto: AuthDto) {
+    async signup(dto: AuthDto) {
         // generate the password hash
+        const hash = await argon.hash(dto.password);
 
         // save the new user
+        const user = await this.prisma.user.create({
+            data: {
+                email: dto.email,
+                hash,
+            },
+            select: {
+                id: true,
+                email: true,
+                createdAt: true,
+            }
+        })
 
         // return the saved user
-
-        return { msg: 'signup' };
+        return user;
     }
 
     signin() {
