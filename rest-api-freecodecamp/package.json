@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "prisma:dev:deploy":"npx prisma migrate deploy",
+    "prisma:dev:deploy": "npx prisma migrate deploy",
     "db:dev:rm": "docker compose -f ./docker/postgres/docker-compose.yaml rm dev-db --stop --force --volumes",
     "db:dev:up": "docker compose -f ./docker/postgres/docker-compose.yaml up dev-db -d",
     "db:dev:restart": "npm run db:dev:rm && npm run db:dev:up && sleep 1 && npm run prisma:dev:deploy",
@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^2.1.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
     "@prisma/client": "^3.14.0",
