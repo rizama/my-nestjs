@@ -11,12 +11,12 @@ export class AuthController {
     ) {}
 
     @Post('signup')
-    signup(@Body() dto: AuthDto): Promise<User> {
+    signup(@Body() dto: AuthDto): Promise<{access_token: string}> {
         return this.authService.signup(dto)
     }
 
     @Post('signin')
-    signin(@Body() dto: AuthDto) {
+    signin(@Body() dto: AuthDto): Promise<{access_token: string}> {
         return this.authService.signin(dto)
     }
 }
