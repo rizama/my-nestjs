@@ -28,8 +28,8 @@ describe('App (e2e)', () => {
     });
 
     afterAll(() => {
-      app.close();
+        app.close();
     })
 
-    it.todo('sholud pass');
+    it.todo('should pass');
 });
