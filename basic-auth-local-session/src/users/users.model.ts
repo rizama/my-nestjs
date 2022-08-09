@@ -19,3 +19,9 @@ export interface User extends mongoose.Document {
     username: string;
     password: string;
 }
+
+export abstract class UserModel {
+    // Model name === Collection Name, it will add 's' in last word
+    // so the collection that will be process is 'users'
+    public static USER_MODEL_NAME = 'user';
+}
