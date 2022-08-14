@@ -1,6 +1,13 @@
 import { UsersService } from './users.service';
 import * as bcrypt from 'bcrypt';
-import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    Post,
+    Request,
+    UseGuards,
+} from '@nestjs/common';
 import { LocalAuthGuard } from 'src/auth/local.auth.guard';
 import { AuthenticatedGuard } from 'src/auth/authenticated.guard';
 
@@ -38,5 +45,12 @@ export class UsersController {
     @Get('/protected')
     getHello(@Request() req): string {
         return req.user;
+    }
+
+    //Get / logout
+    @Get('/logout')
+    logout(@Request() req): any {
+        req.session.destroy();
+        return { msg: 'The user session has ended' };
     }
 }
