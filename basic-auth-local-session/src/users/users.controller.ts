@@ -20,17 +20,27 @@ export class UsersController {
         @Body('password') userPassword: string,
         @Body('username') userName: string,
     ) {
-        const saltOrRounds = 10;
-        const hashedPassword = await bcrypt.hash(userPassword, saltOrRounds);
-        const result = await this.usersService.insertUser(
-            userName,
-            hashedPassword,
-        );
-        return {
-            msg: 'User successfully registered',
-            userId: result.id,
-            userName: result.username,
-        };
+        try {
+            const saltOrRounds = 10;
+            const hashedPassword = await bcrypt.hash(
+                userPassword,
+                saltOrRounds,
+            );
+            const result = await this.usersService.insertUser(
+                userName,
+                hashedPassword,
+            );
+            return {
+                msg: 'User successfully registered',
+                userId: result.id,
+                userName: result.username,
+            };
+        } catch (error) {
+            return {
+                msg: 'Failed',
+                msgError: error.message,
+            };
+        }
     }
 
     //Post / Login
