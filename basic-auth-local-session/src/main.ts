@@ -8,9 +8,10 @@ async function bootstrap() {
 
   app.use(
     session({
-      secret: "change_me",
+      secret: "change_me", // get env vars
       resave: false,
       saveUninitialized: false,
+      cookie: {maxAge: 1000 * 60 * 5}
     })
   )
   app.use(passport.initialize())

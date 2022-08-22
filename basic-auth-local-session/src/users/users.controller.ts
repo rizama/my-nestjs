@@ -47,13 +47,13 @@ export class UsersController {
     @UseGuards(LocalAuthGuard)
     @Post('/login')
     login(@Request() req): any {
-        return { User: req.user, msg: 'User logged in' };
+        return { User: req.user, msg: 'User logged in' }; // TODO: return JWT Token
     }
 
     // Get / protected
     @UseGuards(AuthenticatedGuard)
     @Get('/protected')
-    getHello(@Request() req): string {
+    getHello(@Request() req): string { // TODO: require an Beare Token, validate token
         return req.user;
     }
 
