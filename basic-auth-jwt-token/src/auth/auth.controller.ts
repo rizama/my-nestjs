@@ -10,6 +10,8 @@ import {
 import { UsersService } from 'src/users/users.service';
 import { LocalAuthGuard } from './local.auth.guard';
 import { AuthService } from './auth.service';
+import { AuthDto } from './dto/auth.dto';
+import { LocalValidatedStrategy, TokenLoginResponse } from './auth';
 
 @Controller('auth')
 export class AuthController {
@@ -21,17 +23,16 @@ export class AuthController {
     //post / signup
     @Post('/signup')
     async addUser(
-        @Body('password') userPassword: string,
-        @Body('username') userName: string,
+        @Body('password') payload: AuthDto,
     ) {
         try {
             const saltOrRounds = 10;
             const hashedPassword = await bcrypt.hash(
-                userPassword,
+                payload.password,
                 saltOrRounds,
             );
             const result = await this.usersService.insertUser(
-                userName,
+                payload.username,
                 hashedPassword,
             );
             return {
@@ -50,7 +51,7 @@ export class AuthController {
     //Post / Login
     @UseGuards(LocalAuthGuard) // Find user to database and mapping the body data
     @Post('/signin')
-    login(@Request() req): any {
+    login(@Request() req: LocalValidatedStrategy): Promise<TokenLoginResponse> {
         return this.authService.login(req.user);
     }
 
